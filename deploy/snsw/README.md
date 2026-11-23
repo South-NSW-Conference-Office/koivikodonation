@@ -26,9 +26,10 @@ GitHub push (site/ or deploy/snsw/)
 
 **1. GitHub:** the repo is `South-NSW-Conference-Office/koivikodonation` (public). Push to `main`;
 the workflow runs and publishes the package `koivikodonation`.
-Then set the package visibility to **public** (Org > Packages > koivikodonation > Package settings).
-The image only holds the public web page, and public means the server's read-only GHCR token
-can pull it without extra grants. (If it must stay private, give that token's account read access.)
+The package is **private** (the organisation does not allow public packages). The account behind
+the server's read-only GHCR token (`/etc/site-pull/docker/config.json`) needs **Read** access:
+Org > Packages > koivikodonation > Package settings > Manage access (or add that account to the
+repo, since the package inherits the repo's access).
 
 **2. DNS (Namecheap, koivikko.org):** add `A  give  107.155.65.229` (TTL automatic).
 Check: `dig +short give.koivikko.org` shows `107.155.65.229`.
