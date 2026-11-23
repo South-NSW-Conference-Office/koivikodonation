@@ -33,6 +33,11 @@ services:
       - no-new-privileges:true
     mem_limit: 64m
     pids_limit: 64
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
 
 networks:
   proxy:
