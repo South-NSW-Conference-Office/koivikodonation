@@ -202,7 +202,8 @@ The Worker refuses to run if a live key is used in the sandbox or a test key in 
 - Stripe settings checked 23 Nov 2026: receipts and refund emails on; expiring-card and failed-payment
   emails on, with a portal link; Smart Retries (4 tries / 3 weeks, then cancel); Radar risk controls active;
   public name "Koivikko Foundation", statement descriptor "KOIVIKKO FOUNDATION", privacy policy link set.
-  Left for the account owner: "Require two-step authentication for your team" (Settings > Team and security),
-  and the card-update link in billing emails still uses the legacy koivikko.link setup (switching is irreversible).
+  Card-update link in billing emails: Stripe-hosted page (switched 23 Nov 2026 from the legacy koivikko.link
+  setup, whose site was offline; Stripe does not allow switching back).
+  Left for the account owner: "Require two-step authentication for your team" (Settings > Team and security).
 - Uptime: `.github/workflows/uptime.yml` checks the page, the backend and the certificate every 15 minutes.
 - `site/config.js` picks the backend by address: localhost -> local, "sandbox" in the name -> sandbox, else live.
