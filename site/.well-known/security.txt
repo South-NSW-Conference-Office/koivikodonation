@@ -1,0 +1,6 @@
+# Koivikko donation page: how to report a security problem.
+# Please do not test with real payments or real donor data. Thank you!
+Contact: mailto:koivikkolife@gmail.com
+Expires: 2027-11-23T00:00:00.000Z
+Preferred-Languages: en, fi
+Canonical: https://give.koivikko.org/.well-known/security.txt

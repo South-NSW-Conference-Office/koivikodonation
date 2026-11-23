@@ -1,0 +1,93 @@
+# Builds the give.koivikko.org container and pushes it to GHCR. snswserver pulls it from there
+# by itself (site-pull, every 2 minutes); this workflow never touches the server.
+name: Site image (snswserver)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'deploy/snsw/**'
+      - '.dockerignore'
+      - '.github/workflows/snsw-image.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: snsw-image
+  cancel-in-progress: false
+
+env:
+  IMAGE: ghcr.io/south-nsw-conference-office/koivikodonation
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Headers in nginx and site/_headers match
+        run: |
+          node -e '
+            const fs = require("fs");
+            const cf = {}; let cur = null;
+            for (const l of fs.readFileSync("site/_headers", "utf8").split("\n").map(s => s.trim())) {
+              if (!l || l.startsWith("#")) continue;
+              if (/^([^\s]+:\/\/|\/)/.test(l)) { cur = l; continue; }
+              const i = l.indexOf(":");
+              if (cur === "/*") cf[l.slice(0, i).trim().toLowerCase()] = l.slice(i + 1).trim();
+            }
+            delete cf["strict-transport-security"];
+            const ng = {};
+            for (const m of fs.readFileSync("deploy/snsw/security-headers.conf", "utf8").matchAll(/^\s*add_header\s+([\w-]+)\s+"([^"]*)"\s+always;/gm)) ng[m[1].toLowerCase()] = m[2];
+            const a = JSON.stringify(Object.entries(cf).sort()), b = JSON.stringify(Object.entries(ng).sort());
+            if (a !== b) { console.error("Mismatch\n_headers: " + a + "\nnginx:    " + b); process.exit(1); }
+            console.log("ok");'
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/snsw/Dockerfile
+          platforms: linux/amd64
+          load: true
+          tags: koivikko-give:ci
+
+      - name: Smoke test (locked down like on the server)
+        run: |
+          docker run -d --name kg --read-only --tmpfs /tmp --cap-drop ALL -p 8080:8080 koivikko-give:ci
+          for i in $(seq 1 20); do curl -fs -o /dev/null http://127.0.0.1:8080/ && break; sleep 0.5; done
+          check() { code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$1"); [ "$code" = "$2" ] || { echo "FAIL $1 -> $code (want $2)"; exit 1; }; echo "ok   $1 -> $code"; }
+          check / 200; check /en 200; check /fi 200; check /thank-you 200; check /donate-cancelled 200
+          check /oci.html 200; check /.well-known/security.txt 200; check /robots.txt 200
+          check /_headers 404; check /checkout-mock.html 404; check /.env 404
+          curl -sI http://127.0.0.1:8080/ | grep -qi "^content-security-policy: frame-ancestors 'none'" || { echo "FAIL headers"; exit 1; }
+          curl -sI http://127.0.0.1:8080/nope | grep -qi "^x-frame-options: DENY" || { echo "FAIL headers on 404"; exit 1; }
+          docker logs kg 2>&1 | grep -iE "\[(emerg|alert|crit)\]" && exit 1 || true
+          docker rm -f kg
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push (latest + commit sha)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/snsw/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.title=koivikodonation

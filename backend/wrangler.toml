@@ -1,0 +1,101 @@
+# Koivikko donation backend (Cloudflare Worker).
+# Top level = SANDBOX (Stripe test mode). [env.production] = LIVE.
+# Secrets are NOT in this file. Set them with `wrangler secret put` (see README).
+
+name = "koivikko-donate-sandbox"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Keep the Worker's logs (errors, failed refreshes) so problems can be seen after the fact.
+[observability]
+enabled = true
+
+[vars]
+ENVIRONMENT = "sandbox"
+# Origins allowed to call the API (comma separated, no trailing slash).
+ALLOWED_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000,http://127.0.0.1:9292,https://koivikko-give-sandbox.koivikko-donate-backend.workers.dev"
+# Where Stripe sends the donor afterwards (pages on the donation subdomain).
+# Sandbox: the test copy of the page on workers.dev.
+SUCCESS_URL = "https://koivikko-give-sandbox.koivikko-donate-backend.workers.dev/thank-you"
+CANCEL_URL = "https://koivikko-give-sandbox.koivikko-donate-backend.workers.dev/donate-cancelled"
+# Fixed conversion rates to EUR for the counter. EXAMPLE VALUES - set real ones and review monthly.
+FX_TO_EUR = '{"eur":1,"aud":0.6,"usd":0.9}'
+# Currency the counter total is shown in (EUR, AUD or USD). Converted at the ECB rate.
+COUNTER_CURRENCY = "AUD"
+# Percent added when the donor ticks "cover card fees".
+FEE_PERCENT = "3"
+# Monthly supporters goal shown under the counter. To be confirmed by Kyle/Kevin.
+SUPPORTER_GOAL = "100"
+# Australian family-trust enquiry form.
+CONTACT_FROM_EMAIL = "Koivikko Donations <donations@example.com>"
+# Stripe customer portal (donors cancel or change card). These are SANDBOX values.
+PORTAL_CONFIGURATION_ID = "bpc_1UdM6hAYwPZpnTlfOER5kL4z"
+PORTAL_LOGIN_URL = "https://billing.stripe.com/p/login/test_5kQdR8fy9fE9cGD177gA800"
+# Spam check (Cloudflare Turnstile). Always on for /contact once TURNSTILE_SECRET_KEY is set.
+# Set to "true" to require it before a donation can start as well.
+TURNSTILE_ON_CHECKOUT = "false"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "1459eb07febd4f9b87855ae953ac7473"
+
+# Rate limits per visitor IP address, per endpoint. "period" is in seconds (10 or 60 only).
+[[ratelimits]]
+name = "RL_READ"        # /stats, /recent
+namespace_id = "1001"
+simple = { limit = 300, period = 60 }
+
+[[ratelimits]]
+name = "RL_WRITE"       # /checkout, /portal, /session
+namespace_id = "1002"
+simple = { limit = 30, period = 60 }
+
+[[ratelimits]]
+name = "RL_CONTACT"     # /contact
+namespace_id = "1003"
+simple = { limit = 5, period = 60 }
+
+# ---------------------------------------------------------------- LIVE
+[env.production]
+name = "koivikko-donate"
+
+[env.production.observability]
+enabled = true
+
+[env.production.vars]
+ENVIRONMENT = "production"
+ALLOWED_ORIGINS = "https://give.koivikko.org"
+SUCCESS_URL = "https://give.koivikko.org/thank-you"
+CANCEL_URL = "https://give.koivikko.org/donate-cancelled"
+FX_TO_EUR = '{"eur":1,"aud":0.6,"usd":0.9}'
+COUNTER_CURRENCY = "AUD"
+FEE_PERCENT = "3"
+SUPPORTER_GOAL = "100"
+CONTACT_FROM_EMAIL = "Koivikko Donations <donations@example.com>"
+# Stripe customer portal: create the LIVE portal settings first, then fill these in.
+PORTAL_CONFIGURATION_ID = ""
+PORTAL_LOGIN_URL = ""
+# Spam check (Cloudflare Turnstile). Always on for /contact once TURNSTILE_SECRET_KEY is set.
+# Set to "true" to require it before a donation can start as well.
+TURNSTILE_ON_CHECKOUT = "false"
+
+[[env.production.kv_namespaces]]
+binding = "CACHE"
+id = "REPLACE_WITH_LIVE_KV_ID"
+
+# Rate limits per visitor IP address, per endpoint. "period" is in seconds (10 or 60 only).
+[[env.production.ratelimits]]
+name = "RL_READ"        # /stats, /recent
+namespace_id = "2001"
+simple = { limit = 300, period = 60 }
+
+[[env.production.ratelimits]]
+name = "RL_WRITE"       # /checkout, /portal, /session
+namespace_id = "2002"
+simple = { limit = 30, period = 60 }
+
+[[env.production.ratelimits]]
+name = "RL_CONTACT"     # /contact
+namespace_id = "2003"
+simple = { limit = 5, period = 60 }

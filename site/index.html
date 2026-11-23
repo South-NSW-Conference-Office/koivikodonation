@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help keep Koivikko going — Become a monthly supporter</title>
+  <meta name="description" content="Koivikko Lifestyle Center is a non-profit place of rest and renewal in Mikkeli, Finland. Join the people giving monthly to keep its mission going.">
+  <link rel="canonical" href="https://give.koivikko.org/en">
+  <link rel="alternate" hreflang="en" href="https://give.koivikko.org/en">
+  <link rel="alternate" hreflang="fi" href="https://give.koivikko.org/fi">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://give.koivikko.org/en">
+  <meta property="og:site_name" content="Koivikko">
+  <meta property="og:title" content="Help keep Koivikko going">
+  <meta property="og:description" content="Join the people giving monthly to keep Koivikko’s mission of rest, health and renewal going.">
+  <meta property="og:image" content="https://give.koivikko.org/assets/img/aerial.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#29322A">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.g.doubleclick.net https://www.google.com; connect-src 'self' http://localhost:8787 https://koivikko-donate-sandbox.koivikko-donate-backend.workers.dev https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; frame-src https://challenges.cloudflare.com https://td.doubleclick.net; base-uri 'self'; form-action 'self'; object-src 'none'">
+  <link rel="icon" href="assets/img/Koivikko.png">
+  <link rel="preload" as="image" type="image/webp" imagesrcset="assets/img/aerial-800.webp 800w, assets/img/aerial.webp 1600w" imagesizes="100vw">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/marcellus-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=16">
+  <link rel="stylesheet" href="styles.css?v=30">
+  <script src="lang/en.js?v=30"></script>
+  <script src="lang/fi.js?v=30"></script>
+  <script src="i18n.js?v=23"></script>
+  <script src="guard.js?v=22"></script>
+  <script src="safe-mode.js?v=1"></script>
+  <script src="analytics.js?v=26"></script>
+</head>
+<body>
+  <a class="skip" href="#give">Skip to donation form</a>
+
+  <header class="site-header" id="top">
+    <div class="wrap header-inner">
+      <a href="https://koivikko.org/en" class="logo" aria-label="Koivikko — visit the main website">
+        <img src="assets/img/KOIVIKKO_logo.png" alt="Koivikko" width="168" height="26">
+      </a>
+      <div class="header-actions">
+        <!-- Language menu with flags: built by i18n.js. The links below are the no-JavaScript fallback. -->
+        <div class="lang-menu" id="langMenu">
+          <a href="?lang=en" lang="en">EN</a> <span aria-hidden="true">|</span> <a href="?lang=fi" lang="fi">FI</a>
+        </div>
+        <a href="#give" class="btn btn-gold btn-sm" data-track="donate_click" data-loc="header">Donate</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO ---------------------------------------------------------------->
+    <section class="hero" aria-labelledby="hero-title">
+      <picture class="hero-bg">
+        <source srcset="assets/img/aerial-800.webp 800w, assets/img/aerial.webp 1600w" sizes="100vw" type="image/webp">
+        <img src="assets/img/aerial.jpg" alt="Aerial view of Koivikko’s main building and red cottages surrounded by Finnish forest" fetchpriority="high">
+      </picture>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Non-profit since 2019 · Mikkeli, Finland</p>
+          <h1 id="hero-title"><span class="ph" data-q="Q2 headline">Help keep Koivikko going.</span></h1>
+          <p class="lede"><span class="ph" data-q="Q2 sub-headline">A place where people stop, renew and continue stronger — kept open by friends like you. A small monthly gift makes the biggest difference.</span></p>
+
+          <!-- LIVE COUNTER (PRD 6.3) — hidden until data loads; hidden quietly on error -->
+          <div class="counter is-loading" id="counter" aria-live="polite">
+            <p class="counter-line">
+              <strong class="num" data-count="donors">0</strong> <span id="peopleWord">people are</span> pledging a combined
+              <strong class="num" data-count="total" data-money>€0</strong> this month towards the mission of Koivikko.
+            </p>
+            <p class="counter-early" id="counterEarly" hidden data-i18n-skip></p>
+            <div class="progress" id="progressWrap">
+              <div class="progress-track" role="progressbar" aria-label="Monthly supporters goal" aria-valuemin="0" id="progressbar">
+                <span class="progress-fill" id="progressFill"></span>
+              </div>
+              <p class="progress-label"><span id="progressText"></span> <span class="ph" data-q="Q2 goal">monthly supporters goal</span></p>
+            </div>
+          </div>
+
+          <ul class="hero-proof" aria-label="Why give with confidence">
+            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z"/></svg>Registered fundraising permit</li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 1 1 12 0v2h1v12H5V10h1Zm2 0h8V8a4 4 0 1 0-8 0v2Z"/></svg>Secure payment by Stripe</li>
+            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Zm-1-6 7-7-1.4-1.4L11 13.2 8.4 10.6 7 12l4 4Z"/></svg>Cancel monthly gifts anytime</li>
+          </ul>
+        </div>
+
+        <!-- DONATION FORM (PRD 6.5) — placed in the hero so it is above the fold on desktop -->
+        <div class="give-card" id="give" tabindex="-1">
+          <form id="donateForm" novalidate autocomplete="off">
+            <h2 class="give-title">Choose your gift</h2>
+            <p class="giving-from" id="givingFrom" hidden>
+              Giving from <strong id="countryName" data-i18n-skip></strong>
+              <button type="button" class="btn-link" id="changeCountry" aria-haspopup="dialog">Change</button>
+            </p>
+
+            <fieldset class="freq" aria-label="How often">
+              <input type="radio" name="frequency" id="f-monthly" value="monthly" checked autocomplete="off">
+              <label for="f-monthly">Monthly <span class="badge">Most impact</span></label>
+              <input type="radio" name="frequency" id="f-once" value="one-time" autocomplete="off">
+              <label for="f-once">Give once</label>
+            </fieldset>
+
+            <div class="currency-row">
+              <span id="amountLegend" class="label">Amount</span>
+              <label class="currency">
+                <span class="sr-only">Currency</span>
+                <select id="currency" name="currency" autocomplete="off">
+                  <option value="EUR">€ EUR</option>
+                  <option value="AUD">A$ AUD</option>
+                  <option value="USD">$ USD</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="amounts" role="radiogroup" aria-labelledby="amountLegend" id="amounts"></div>
+
+            <div class="other" id="otherWrap" hidden>
+              <label for="otherAmount" class="label">Other amount</label>
+              <div class="other-input">
+                <span class="cur-sym" id="curSym">€</span>
+                <input type="text" inputmode="decimal" id="otherAmount" autocomplete="off" maxlength="14" placeholder="Enter amount" aria-describedby="otherError">
+              </div>
+              <p class="field-error" id="otherError" aria-live="polite" hidden data-i18n-skip></p>
+            </div>
+
+            <p class="cur-change-note" id="curChangeNote" role="status" hidden data-i18n-skip></p>
+            <p class="impact" id="impact" aria-live="polite"></p>
+
+            <div class="nudge" id="nudge" hidden>
+              <p><strong>Could you make it monthly?</strong> Regular gifts let Koivikko plan ahead — even a small amount every month adds up.</p>
+              <button type="button" class="btn-link" id="nudgeBtn"></button>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" id="coverFees">
+              <span>Add <strong id="feeAmt">€0.75</strong><span id="feeEvery" data-i18n-skip></span> to help cover card fees</span>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="showCountry">
+              <span>Show my country (only) in the live supporter feed</span>
+            </label>
+
+            <div id="giftSpamCheck"></div>
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <noscript><p class="form-error">Giving on this page needs JavaScript. Please switch it on in your browser and reload, or email us at koivikkolife@gmail.com.</p></noscript>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="donateBtn">
+              <span id="donateLabel" data-i18n-skip>Give €25 monthly</span>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5Z"/></svg>
+            </button>
+
+            <ul class="secure-row">
+              <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 1 1 12 0v2h1v12H5V10h1Zm2 0h8V8a4 4 0 1 0-8 0v2Z"/></svg>Secured by Stripe</li>
+              <li>Card · Apple Pay · Google Pay</li>
+            </ul>
+
+            <p class="fine">Donations go to Koivikko Elämäntapa Instituutti sr (Koivikko Foundation). Fundraising permit RA/2021/1553 (Poliisihallitus 16.11.2021).</p>
+          </form>
+
+          <!-- Special pathways (PRD 1 + 6.6), visible right where people decide -->
+          <div class="alt-paths">
+            <p class="alt-title">Need a tax-deductible receipt?</p>
+            <button type="button" class="alt-path" data-open-au data-track="au_trust_enquiry_open">
+              <span class="cc" aria-hidden="true">AU</span>
+              <span class="alt-text"><strong>Australian family trust</strong><small>We’ll put you in touch with the North NSW Conference</small></span>
+              <span class="alt-arrow" aria-hidden="true">→</span>
+            </button>
+            <a class="alt-path" data-oci href="oci.html" data-track="us_oci_click">
+              <span class="cc" aria-hidden="true">US</span>
+              <span class="alt-text"><strong>US tax receipt</strong><small>Give through OCI for a US tax deduction</small></span>
+              <span class="alt-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THREE WAYS TO GIVE (PRD 1, 6.6): Kyle's "three pathways" ---------------->
+    <section class="section ways" id="ways" aria-labelledby="ways-title">
+      <div class="wrap">
+        <p class="eyebrow dark center">Three ways to give</p>
+        <h2 id="ways-title" class="center">Choose the way that works for you</h2>
+        <p class="center sub">Most supporters give by card. If you need a tax-deductible receipt in Australia or the US, we’ll send you to the right partner.</p>
+        <div class="ways-grid">
+          <article class="way way-main">
+            <span class="way-tag">Most supporters</span>
+            <span class="way-flag" aria-hidden="true">1</span>
+            <h3>Anyone, anywhere: give by card</h3>
+            <p>Monthly or once, in a minute. Secure payment by Stripe, straight to the Koivikko Foundation. Cancel a monthly gift anytime.</p>
+            <a href="#give" class="btn btn-primary" data-track="donate_click" data-loc="ways">Give by card</a>
+          </article>
+          <article class="way">
+            <span class="way-flag" aria-hidden="true">2</span>
+            <h3>Australian residents: family trust distributions</h3>
+            <p>If you’re an Australian resident looking to give through family trust distributions, we’ll put you in touch with someone at the North New South Wales Conference.</p>
+            <button type="button" class="btn btn-outline" id="auBtn" data-open-au data-track="au_trust_enquiry_open">Put me in touch</button>
+          </article>
+          <article class="way">
+            <span class="way-flag" aria-hidden="true">3</span>
+            <h3>US donors: US tax receipt</h3>
+            <p>Donating from the USA and need a US tax receipt? You can give through OCI, which offers tax deductions for US donors.</p>
+            <a class="btn btn-outline" data-oci href="oci.html" id="ociBtn" data-track="us_oci_click">Give via OCI <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+        <div class="bank-row">
+          <span><strong>Prefer a bank transfer?</strong> <span id="bankRecipient" data-i18n-skip translate="no">Koivikko Elämäntapa Instituutti sr</span></span>
+          <span>IBAN <code id="iban" translate="no">FI11 5271 0420 4946 51</code> <button type="button" class="copy" id="copyIban" aria-label="Copy IBAN">Copy</button></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY (PRD 6.4) ------------------------------------------------------>
+    <section class="section story" aria-labelledby="story-title">
+      <div class="wrap story-grid">
+        <div class="story-copy">
+          <p class="eyebrow dark">Why your support matters now</p>
+          <h2 id="story-title">A quiet place that changes lives — and depends on its friends</h2>
+          <div class="ph" data-q="Q1/Q3 story copy from Kevin’s email">
+            <p>Since 2019, Koivikko has welcomed people to 33 hectares of forest and lakeside just outside Mikkeli, Finland — to rest, learn healthier ways of living and rediscover what matters.</p>
+            <p>Through health courses like Karpalo, plant-based cooking with KoKaRu, sauna by the lake and simply time in nature, guests leave lighter, healthier and more hopeful.</p>
+            <p><strong>Koivikko is a non-profit.</strong> To keep its doors open and its programs running, it needs a circle of regular supporters standing behind it. That is what this campaign is about — and why every monthly gift counts.</p>
+          </div>
+          <div class="highlight ph" data-q="Q16 — ARISE mention needs Kyle’s approval">
+            <span class="highlight-num">3</span>
+            <p>years in a row of the ARISE program — and this year was the best one yet.</p>
+          </div>
+          <a href="#give" class="btn btn-primary" data-track="donate_click" data-loc="story">Become a monthly supporter</a>
+        </div>
+        <div class="collage" aria-hidden="true">
+          <img src="assets/img/lake-sunset.jpg" alt="" loading="lazy" class="c1">
+          <img src="assets/img/cooking.jpg" alt="" loading="lazy" class="c2">
+          <img src="assets/img/sauna.jpg" alt="" loading="lazy" class="c3">
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT YOU SUSTAIN ------------------------------------------------------->
+    <section class="section sustain" aria-labelledby="sustain-title">
+      <div class="wrap">
+        <p class="eyebrow dark center">What your gift helps keep going</p>
+        <h2 id="sustain-title" class="center">Your support sustains the whole mission</h2>
+        <div class="cards-3 ph" data-q="Q3 — what donations are used for">
+          <article class="tile">
+            <img src="assets/img/food.jpg" alt="Colourful plant-based bowls" loading="lazy">
+            <div class="tile-body">
+              <h3>Health programs</h3>
+              <p>Karpalo 5-day health courses, KoKaRu plant-based cooking and raw food courses that help people turn their health around.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <img src="assets/img/lake.jpg" alt="Calm Finnish lake framed by forest" loading="lazy">
+            <div class="tile-body">
+              <h3>A place of rest</h3>
+              <p>Forest trails, a lakefront and saunas — a peaceful setting where body and mind can recover.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <img src="assets/img/dining.jpg" alt="Koivikko’s bright dining hall" loading="lazy">
+            <div class="tile-body">
+              <h3>Community &amp; care</h3>
+              <p>A welcoming team and a historic home that keeps opening its doors to guests, families and gatherings.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS (PRD 6.8) --------------------------------------------------->
+    <section class="section voices" aria-labelledby="voices-title">
+      <div class="wrap">
+        <p class="eyebrow center">Real stories</p>
+        <h2 id="voices-title" class="center">What Koivikko means to people</h2>
+        <div class="quotes ph" data-q="Q10 — permission to reuse testimonials">
+          <figure class="quote">
+            <blockquote>“Koivikko has been my retreat for body and mind, and my home for the soul … I found space to heal, grow, and rediscover a healthier, more intentional way of living.”</blockquote>
+            <figcaption>— Emily</figcaption>
+          </figure>
+          <figure class="quote featured">
+            <blockquote>“Rheumatism eased, metabolic syndrome nearly disappeared, and weight dropped from 125 kg to 75 … medications are no longer needed.”</blockquote>
+            <figcaption>— Leif &amp; Pia, Karpalo &amp; KoKaRu graduates</figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“Being in beautiful, peaceful nature has a calming effect … It’s also helped me in my health journey, giving me space to slow down, rest, and feel my best.”</blockquote>
+            <figcaption>— Veera</figcaption>
+          </figure>
+        </div>
+        <p class="center"><a href="#give" class="btn btn-gold" data-track="donate_click" data-loc="testimonials">Help more people find this</a></p>
+      </div>
+    </section>
+
+    <!-- FAQ (PRD 6.9) -------------------------------------------------------------->
+    <section class="section faq" aria-labelledby="faq-title">
+      <div class="wrap narrow">
+        <h2 id="faq-title" class="center">Questions</h2>
+        <div class="ph" data-q="FAQ answers need confirmation">
+          <details>
+            <summary>Where does my money go?</summary>
+            <p>Directly to the Koivikko Foundation (Koivikko Elämäntapa Instituutti sr), the non-profit charity behind Koivikko Lifestyle Center in Mikkeli, Finland.</p>
+          </details>
+          <details>
+            <summary>Can I cancel or change my monthly gift?</summary>
+            <p>Yes, anytime. You can update your card or cancel in a couple of clicks on Stripe’s secure page. To change the amount, cancel and start a new gift.</p>
+            <p><button type="button" class="btn-link" data-manage>Manage my gift</button></p>
+          </details>
+          <details>
+            <summary>Can I get a refund?</summary>
+            <p>Yes. If you gave by mistake or gave the wrong amount, email <a href="mailto:koivikkolife@gmail.com">koivikkolife@gmail.com</a> with the email address you used and the date of the gift. Our administrator will refund it to the card you paid with.</p>
+          </details>
+          <details>
+            <summary>Is my donation tax-deductible?</summary>
+            <p>Card donations are not tax-deductible by default. Australian family-trust donors can <a href="#ways">get in touch with the North NSW Conference</a>, and US donors can <a href="#ways">give via OCI</a> for a US tax receipt.</p>
+          </details>
+          <details>
+            <summary>Is the payment secure?</summary>
+            <p>Yes. Payments are processed by Stripe, a global payments provider. Your card details go straight to Stripe — Koivikko never sees or stores them.</p>
+          </details>
+          <details>
+            <summary>Will my name be shown?</summary>
+            <p>Never. The live feed only ever shows an amount and whether the gift is monthly. Your country is shown only if you tick the box to show it.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA ------------------------------------------------------------------>
+    <section class="final" aria-labelledby="final-title">
+      <img src="assets/img/lake-sunset.jpg" alt="" loading="lazy" class="final-bg">
+      <div class="wrap final-inner">
+        <h2 id="final-title">Be supporter <span id="nextNum" data-i18n-skip>#57</span></h2>
+        <p>Join the people keeping Koivikko’s doors open — every month.</p>
+        <a href="#give" class="btn btn-gold btn-lg" data-track="donate_click" data-loc="final">Give monthly now</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img src="assets/img/KOIVIKKO_logo.png" alt="Koivikko" width="150" height="23" loading="lazy">
+        <p>Koivikko Lifestyle Center<br>Koivikontie 8, 50200 Mikkeli, Finland<br><a href="mailto:koivikkolife@gmail.com">koivikkolife@gmail.com</a></p>
+      </div>
+      <div>
+        <p>Koivikko Elämäntapa Instituutti sr (Koivikko Foundation)<br>Terveyskoulukoti Oy</p>
+        <p>Rahankeräyslupa RA/2021/1553 (Poliisihallitus 16.11.2021)</p>
+      </div>
+      <div>
+        <ul class="footer-links">
+          <li><a href="https://koivikko.org/en">Visit koivikko.org</a></li>
+          <li><a href="https://koivikko.org/en/policies/privacy-policy">Privacy Policy</a></li>
+          <li><button type="button" class="btn-link footer-link" data-consent-settings hidden>Cookie settings</button></li>
+          <li><a href="https://www.facebook.com/koivikkolifestylecenter" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/koivikkolife" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" id="stickyCta" aria-hidden="true">
+    <span class="sticky-count" id="stickyCount"></span>
+    <a href="#give" class="btn btn-gold" tabindex="-1" data-track="donate_click" data-loc="sticky">Give monthly</a>
+  </div>
+
+  <!-- Toasts (PRD 6.7) -->
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- AU family-trust dialog (PRD 6.6 Card A / FR-20) -->
+  <!-- Country picker: sets the gift currency (Australia → AUD, Europe → EUR, rest of world → USD) -->
+  <dialog id="countryDialog" class="country-dialog" aria-labelledby="country-title" aria-describedby="country-desc">
+    <form method="dialog" class="dialog-close-form"><button class="x" aria-label="Close">×</button></form>
+    <form id="countryForm" novalidate>
+      <h2 id="country-title">Choose your country</h2>
+      <p id="country-desc">We’ll show your gift in your currency and point you to any tax-deductible option for your country.</p>
+      <label for="countrySelect" class="sr-only">Country</label>
+      <select id="countrySelect" autocomplete="country"></select>
+      <p class="country-cur" id="countryCur" aria-live="polite"></p>
+      <!-- Cloudflare Turnstile human check (only when config.js spamCheckOnCountry is on) -->
+      <div id="countrySpamCheck" class="spam-check" hidden></div>
+      <p class="spam-hint" id="countrySpamHint" hidden aria-live="polite">Checking you’re a person. This usually takes a second.</p>
+      <button class="btn btn-primary btn-block" type="submit" id="countryContinue">Continue</button>
+    </form>
+  </dialog>
+
+  <dialog id="auDialog" aria-labelledby="au-title">
+    <form method="dialog" class="dialog-close-form"><button class="x" aria-label="Close">×</button></form>
+    <form id="auForm" novalidate>
+      <h2 id="au-title">Family trust giving (Australia)</h2>
+      <p>Leave your details and someone from the North New South Wales Conference will contact you about giving through your family trust.</p>
+      <label>Name <input name="name" autocomplete="name" required maxlength="100"></label>
+      <label>Email <input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+      <label>Phone <span class="opt">(optional)</span> <input name="phone" type="tel" autocomplete="tel" maxlength="30"></label>
+      <label>Message <span class="opt">(optional)</span> <textarea name="message" rows="3" maxlength="1000"></textarea></label>
+      <label class="hp" aria-hidden="true">Leave this empty <input name="leaveBlank" tabindex="-1" autocomplete="off"></label>
+      <div id="auSpamCheck"></div>
+      <p class="form-error" id="auError" role="alert" hidden></p>
+      <button class="btn btn-primary btn-block" type="submit">Send my details</button>
+    </form>
+    <div id="auDone" hidden class="done">
+      <h2>Thank you!</h2>
+      <p>We’ve passed your details on. Someone from the North NSW Conference will be in touch soon.</p>
+      <form method="dialog"><button class="btn btn-primary">Close</button></form>
+    </div>
+  </dialog>
+
+  <script src="config.js?v=30" defer></script>
+  <script src="api.js?v=28" defer></script>
+  <script src="country.js?v=20" defer></script>
+  <script src="app.js?v=31" defer></script>
+</body>
+</html>

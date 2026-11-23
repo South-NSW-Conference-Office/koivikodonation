@@ -1,0 +1,21 @@
+# Dependencies and local tool state
+node_modules/
+.wrangler/
+.claude/
+
+# Secrets (set with `wrangler secret put`; see backend/README.md)
+.env
+.dev.vars
+*.pem
+
+# Private project documents: this repository is PUBLIC
+*.docx
+Koivikko_Voice_Note_Transcripts.md
+
+# Offline mockup bundle (for the zip handed to reviewers, not the site)
+READ ME.txt
+START HERE - Open mockup.html
+
+# Test run output
+frontend-tests/last-report.json
+frontend-tests/last-run.txt

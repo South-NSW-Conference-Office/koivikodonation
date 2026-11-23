@@ -1,0 +1,23 @@
+{
+  "name": "koivikko-donate-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy:sandbox": "wrangler deploy",
+    "deploy:live": "wrangler deploy --env production",
+    "deploy:site:sandbox": "wrangler deploy -c ../wrangler.site.toml",
+    "lint": "cd .. && eslint backend/src backend/test backend/eslint.config.js site",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "stripe": "^17.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "wrangler": "^4.0.0"
+  }
+}

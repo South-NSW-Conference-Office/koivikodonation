@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.g.doubleclick.net https://www.google.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.g.doubleclick.net https://www.google.com; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src https://td.doubleclick.net">
+  <title>Checkout preview — Koivikko Foundation</title>
+  <link rel="icon" href="assets/img/Koivikko.png">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=16">
+  <link rel="stylesheet" href="styles.css?v=30">
+  <style>
+    /* MOCKUP: a preview of the hosted Stripe Checkout step. The live page is served by Stripe;
+       its colours and logo come from the Foundation's Stripe branding settings. */
+    body { background: #fff; }
+    .co { min-height: 100vh; display: grid; grid-template-columns: 1fr; }
+    .co-summary { background: var(--green-900); color: #fff; padding: 1.4rem 16px 1.8rem; }
+    .co-pay { padding: 1.6rem 16px 2.5rem; }
+    .co-inner { max-width: 420px; margin: 0 auto; }
+    .back { display: inline-flex; align-items: center; gap: .55rem; color: rgba(255,255,255,.85); text-decoration: none; font-size: .92rem; font-weight: 500; }
+    .back img { width: 28px; height: 28px; border-radius: 50%; background: #fff; }
+    .back:hover { color: #fff; }
+    .co-label { margin: 1.6rem 0 .2rem; color: rgba(255,255,255,.8); font: 400 .95rem var(--sans); letter-spacing: 0; }
+    .co-amount { font-family: var(--serif); font-size: 2.6rem; line-height: 1.1; margin: 0; }
+    .co-amount small { font-family: var(--sans); font-size: 1rem; color: rgba(255,255,255,.75); }
+    .lines { margin-top: 1.4rem; font-size: .93rem; }
+    .line { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .line.total { border: 0; font-weight: 700; padding-top: .8rem; }
+    .line span:first-child small { display: block; color: rgba(255,255,255,.6); font-size: .8rem; font-weight: 400; }
+    .renew { font-size: .85rem; color: rgba(255,255,255,.75); margin-top: .6rem; }
+    .co-legal { font-size: .75rem; color: rgba(255,255,255,.55); margin-top: 1.6rem; }
+    .preview-note { background: #eef1ff; color: #3b3f8f; border-radius: 10px; padding: .7rem .9rem; font-size: .84rem; margin-bottom: 1.3rem; }
+    .xpay { display: grid; gap: .6rem; }
+    .xbtn { height: 46px; border-radius: 8px; border: 0; background: #000; color: #fff; font: 600 1rem var(--sans); cursor: default; }
+    .divider { display: flex; align-items: center; gap: .8rem; color: #5f645f; font-size: .85rem; margin: 1.2rem 0; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #e3e6e1; }
+    .fld { display: block; margin-bottom: 1rem; }
+    .fld > span { display: block; font-size: .85rem; font-weight: 600; color: #3b3f3b; margin-bottom: .35rem; }
+    .in { width: 100%; font: 400 1rem var(--sans); padding: .7rem .8rem; border: 1px solid #d5d9d4; border-radius: 8px; background: #fafbfa; color: #8a8f8a; }
+    select.in { color: var(--ink); background: #fff; }
+    .card-group { border: 1px solid #d5d9d4; border-radius: 8px; overflow: hidden; }
+    .card-group .in { border: 0; border-radius: 0; }
+    .card-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #d5d9d4; }
+    .card-row .in + .in { border-left: 1px solid #d5d9d4; }
+    .brands { float: right; font-size: .7rem; letter-spacing: .04em; color: #5f645f; font-weight: 600; }
+    .pay-btn { width: 100%; margin-top: .4rem; }
+    .pay-btn[aria-busy="true"] { opacity: .75; }
+    .terms { font-size: .76rem; color: #6b706b; margin-top: 1rem; line-height: 1.5; }
+    .powered { text-align: center; font-size: .78rem; color: #5f645f; margin-top: 1.6rem; }
+    .powered a { color: #5f645f; }
+    .err { background: #fdeeee; color: #a11a1a; border-radius: 8px; padding: .7rem .9rem; }
+    @media (min-width: 900px) {
+      .co { grid-template-columns: 1fr 1fr; }
+      .co-summary { padding: 4.5rem 3rem; display: flex; justify-content: flex-end; }
+      .co-pay { padding: 4.5rem 3rem; }
+      .co-summary .co-inner { margin: 0; width: 100%; }
+      .co-pay .co-inner { margin: 0; }
+      .co-amount { font-size: 3rem; }
+    }
+  </style>
+  <script src="lang/en.js?v=30"></script>
+  <script src="lang/fi.js?v=30"></script>
+  <script src="i18n.js?v=23"></script>
+  <script src="guard.js?v=22"></script>
+  <script src="analytics.js?v=26"></script>
+</head>
+<body>
+  <div class="co">
+    <aside class="co-summary">
+      <div class="co-inner">
+        <a class="back" href="donate-cancelled.html" aria-label="Back to Koivikko, no payment will be taken">
+          <span aria-hidden="true">←</span><img src="assets/img/Koivikko.png" alt=""> Koivikko Foundation
+        </a>
+        <h1 class="co-label" id="label">Gift to Koivikko Foundation</h1>
+        <p class="co-amount" id="headline">…</p>
+        <div class="lines" id="lines"></div>
+        <p class="renew" id="renew" hidden></p>
+        <p class="co-legal">Koivikko Elämäntapa Instituutti sr · Fundraising permit RA/2021/1553</p>
+      </div>
+    </aside>
+
+    <main class="co-pay">
+      <div class="co-inner">
+        <p class="preview-note"><strong>Preview:</strong> this step is Stripe’s secure checkout. Card details are typed on Stripe’s page, never on Koivikko’s site. Nothing here can be filled in.</p>
+
+        <div id="err" class="err" hidden>This checkout link has expired. <a href="index.html#give">Start again</a></div>
+
+        <form id="payForm" novalidate>
+          <div class="xpay" aria-hidden="true">
+            <button type="button" class="xbtn" tabindex="-1">Apple Pay</button>
+            <button type="button" class="xbtn" tabindex="-1">Google Pay</button>
+          </div>
+          <div class="divider">Or pay with card</div>
+
+          <label class="fld"><span>Email</span>
+            <input class="in" type="email" placeholder="you@example.com" disabled>
+          </label>
+
+          <div class="fld">
+            <span>Card information <span class="brands">VISA · MC · AMEX</span></span>
+            <div class="card-group">
+              <input class="in" placeholder="1234 1234 1234 1234" disabled aria-label="Card number">
+              <div class="card-row">
+                <input class="in" placeholder="MM / YY" disabled aria-label="Expiry">
+                <input class="in" placeholder="CVC" disabled aria-label="CVC">
+              </div>
+            </div>
+          </div>
+
+          <label class="fld"><span>Name on card</span>
+            <input class="in" placeholder="Full name" disabled>
+          </label>
+
+          <label class="fld"><span>Country or region</span>
+            <select class="in" id="country">
+              <option>Australia</option><option>Finland</option><option>United States</option><option>Kenya</option>
+              <option>Philippines</option><option>Germany</option><option>New Zealand</option><option>United Kingdom</option>
+            </select>
+          </label>
+
+          <button class="btn btn-primary btn-lg pay-btn" id="pay" type="submit">…</button>
+          <p class="terms" id="terms"></p>
+        </form>
+
+        <p class="powered">Powered by Stripe · <a href="https://stripe.com/legal/end-users" rel="noopener">Terms</a> · <a href="https://stripe.com/privacy" rel="noopener">Privacy</a></p>
+      </div>
+    </main>
+  </div>
+
+  <script src="config.js?v=30"></script>
+  <script src="api.js?v=28"></script>
+  <script src="checkout-mock.js?v=21"></script>
+</body>
+</html>

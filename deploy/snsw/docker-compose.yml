@@ -1,0 +1,40 @@
+# give.koivikko.org (Koivikko donation page) on snswserver.
+#
+# Copy to /etc/site-pull/koivikko-give/docker-compose.yml (root-owned). site-pull pulls a new
+# image from GHCR every 2 minutes and restarts the container when it changed. CI only pushes
+# the image; it has no server access. To pin a release: IMAGE_TAG=<git sha> in .env next to it.
+#
+# Front door: the shared nginx-proxy + acme-companion stack. It routes give.koivikko.org here and
+# issues the Let's Encrypt certificate (needs the DNS record give -> 107.155.65.229 first).
+# The container is a static nginx: no secrets, no database, no volumes.
+
+services:
+  web:
+    image: ghcr.io/south-nsw-conference-office/koivikodonation:${IMAGE_TAG:-latest}
+    container_name: koivikko-give
+    restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: give.koivikko.org
+      VIRTUAL_PORT: "8080"
+      LETSENCRYPT_HOST: give.koivikko.org
+      LETSENCRYPT_EMAIL: snswcomms@adventist.org.au
+    # Not published on the host; only nginx-proxy reaches it over the edge network
+    expose:
+      - "8080"
+    networks:
+      - proxy
+    # Locked down: nothing in the container needs to write, run as root or gain privileges
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 64m
+    pids_limit: 64
+
+networks:
+  proxy:
+    external: true
+    name: edge-koivikko   # own edge network, shared only with nginx-proxy (same pattern as edge-formbuilder)

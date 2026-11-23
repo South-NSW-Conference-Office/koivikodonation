@@ -1,0 +1,4 @@
+# Only the static site and its server config go into the image (deploy/snsw/Dockerfile)
+*
+!site/
+!deploy/snsw/

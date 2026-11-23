@@ -1,0 +1,33 @@
+# HTTP headers for the donation page. Cloudflare reads this file when the sandbox copy is deployed
+# (wrangler.site.toml); it is not published. The local preview server (frontend-tests/server.js)
+# sends the "/*" block too, so tests see the same headers.
+# The live site (give.koivikko.org on snswserver) sends the same list from
+# deploy/snsw/security-headers.conf: change both together (headers.test.mjs checks they match).
+#
+# The main security policy (which scripts, styles and servers the page may use) stays in the
+# <meta http-equiv="Content-Security-Policy"> line at the top of each page, so it also works on
+# the preview server. A <meta> tag cannot stop other websites from framing the page, so that
+# one rule (frame-ancestors) is sent here as a header. Browsers apply both policies.
+
+/*
+  # Nobody may show the page inside a frame on another site (stops "clickjacking": a fake site
+  # laying its own buttons over our Donate / Copy IBAN buttons)
+  Content-Security-Policy: frame-ancestors 'none'
+  X-Frame-Options: DENY
+  # Browsers must use the file type we send (a file can't be passed off as a script)
+  X-Content-Type-Options: nosniff
+  # Other sites only see "give.koivikko.org", never the full address with campaign tags
+  # or the Stripe session id on the thank-you page
+  Referrer-Policy: strict-origin-when-cross-origin
+  # The page never needs camera, microphone, location or the browser's payment sheet
+  # (Stripe Checkout runs on Stripe's own site). Also keeps the visit out of Chrome's ad topics.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  # Pages opened from here (WhatsApp, Facebook, OCI) can't reach back into this tab
+  Cross-Origin-Opener-Policy: same-origin
+  # Always HTTPS for a year once a browser has visited (subdomains left alone on purpose)
+  Strict-Transport-Security: max-age=31536000
+
+# The sandbox copy on workers.dev uses test payments: keep it out of Google and other search
+# engines so no real donor finds it. The live address (give.koivikko.org) is not affected.
+https://:worker.koivikko-donate-backend.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
