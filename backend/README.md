@@ -190,6 +190,7 @@ The Worker refuses to run if a live key is used in the sandbox or a test key in 
 | Live page | https://give.koivikko.org (snswserver, see `../deploy/snsw/README.md`) |
 | Backend (Worker `koivikko-donate`) | https://koivikko-donate.koivikko-donate-backend.workers.dev |
 | Saved counter (KV) | `production-CACHE` (`ccb7a5a40920408c9c1f3ed76cdf039b`) |
+| Stripe webhook (live) | `we_1UetZlAYwPZpnTlflo1EJhgj` -> `/stripe-webhook`, eight events |
 | Spam check | Turnstile widget "Koivikko donation page (live)", domain `give.koivikko.org`; required at checkout |
 
 - Redeploy the backend: `npm run deploy:live`. The page deploys itself on every push to `main`.
