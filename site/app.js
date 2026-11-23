@@ -570,7 +570,12 @@
 
   // ---------------------------------------------------------------- pathways (PRD 6.6)
   const dlg = $('#auDialog');
-  $$('[data-open-au]').forEach((b) => b.addEventListener('click', () => {
+  // Enquiry form switched off (config.js familyTrustForm): the same buttons open an email instead
+  if (CFG.familyTrustForm === false) {
+    const mail = 'mailto:' + CFG.contactEmail + '?subject=' + encodeURIComponent($('#au-title').textContent.trim());
+    $$('[data-open-au]').forEach((b) => b.addEventListener('click', () => { track('au_trust_email_click'); location.href = mail; }));
+  }
+  if (CFG.familyTrustForm !== false) $$('[data-open-au]').forEach((b) => b.addEventListener('click', () => {
     // A6: opening it again after a successful send gives a fresh, empty form
     if (!$('#auDone').hidden) { $('#auForm').reset(); $('#auForm').hidden = false; $('#auDone').hidden = true; clearAuErrors(); if (spamWidget && window.turnstile) window.turnstile.reset(spamWidget); }
     dlg.showModal(); $('input[name="name"]', dlg).focus(); loadSpamCheck();

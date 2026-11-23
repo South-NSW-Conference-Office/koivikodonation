@@ -194,6 +194,15 @@ The Worker refuses to run if a live key is used in the sandbox or a test key in 
 | Spam check | Turnstile widget "Koivikko donation page (live)", domain `give.koivikko.org`; required at checkout |
 
 - Redeploy the backend: `npm run deploy:live`. The page deploys itself on every push to `main`.
-- Secrets set: `TURNSTILE_SECRET_KEY`. Still to set (live Stripe): `STRIPE_SECRET_KEY` (restricted `rk_live_` key),
-  `STRIPE_WEBHOOK_SECRET`; for the family-trust form: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`.
+- Secrets set: `STRIPE_SECRET_KEY` (restricted `rk_live_` key: Checkout Sessions and Customer portal write;
+  Subscriptions, Customers, Refunds, Payment disputes read), `STRIPE_WEBHOOK_SECRET`, `TURNSTILE_SECRET_KEY`.
+  Not set: `RESEND_API_KEY`, `CONTACT_TO_EMAIL` (the family-trust form is switched off on the live site,
+  `familyTrustForm` in `site/config.js`; its buttons open an email instead).
+- Stripe customer portal: `bpc_1UetnzAYwPZpnTlfS7QZJDio`, login link in `PORTAL_LOGIN_URL`.
+- Stripe settings checked 23 Nov 2026: receipts and refund emails on; expiring-card and failed-payment
+  emails on, with a portal link; Smart Retries (4 tries / 3 weeks, then cancel); Radar risk controls active;
+  public name "Koivikko Foundation", statement descriptor "KOIVIKKO FOUNDATION", privacy policy link set.
+  Left for the account owner: "Require two-step authentication for your team" (Settings > Team and security),
+  and the card-update link in billing emails still uses the legacy koivikko.link setup (switching is irreversible).
+- Uptime: `.github/workflows/uptime.yml` checks the page, the backend and the certificate every 15 minutes.
 - `site/config.js` picks the backend by address: localhost -> local, "sandbox" in the name -> sandbox, else live.

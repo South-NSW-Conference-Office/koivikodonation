@@ -19,8 +19,8 @@ ALLOWED_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000,http://127.0.0.1:
 # Sandbox: the test copy of the page on workers.dev.
 SUCCESS_URL = "https://koivikko-give-sandbox.koivikko-donate-backend.workers.dev/thank-you"
 CANCEL_URL = "https://koivikko-give-sandbox.koivikko-donate-backend.workers.dev/donate-cancelled"
-# Fixed conversion rates to EUR for the counter. EXAMPLE VALUES - set real ones and review monthly.
-FX_TO_EUR = '{"eur":1,"aud":0.6,"usd":0.9}'
+# Fallback rates to EUR, used only if the ECB rates cannot be fetched (ECB 20 Nov 2026: 1 EUR = 1.6487 AUD = 1.0990 USD).
+FX_TO_EUR = '{"eur":1,"aud":0.61,"usd":0.91}'
 # Currency the counter total is shown in (EUR, AUD or USD). Converted at the ECB rate.
 COUNTER_CURRENCY = "AUD"
 # Percent added when the donor ticks "cover card fees".
@@ -68,14 +68,15 @@ ENVIRONMENT = "production"
 ALLOWED_ORIGINS = "https://give.koivikko.org"
 SUCCESS_URL = "https://give.koivikko.org/thank-you"
 CANCEL_URL = "https://give.koivikko.org/donate-cancelled"
-FX_TO_EUR = '{"eur":1,"aud":0.6,"usd":0.9}'
+FX_TO_EUR = '{"eur":1,"aud":0.61,"usd":0.91}'
 COUNTER_CURRENCY = "AUD"
 FEE_PERCENT = "3"
 SUPPORTER_GOAL = "100"
 CONTACT_FROM_EMAIL = "Koivikko Donations <donations@example.com>"
-# Stripe customer portal: create the LIVE portal settings first, then fill these in.
-PORTAL_CONFIGURATION_ID = ""
-PORTAL_LOGIN_URL = ""
+# Stripe customer portal (LIVE, activated 23 Nov 2026): card updates, invoice history,
+# cancel at the end of the paid month. Edit in Stripe > Settings > Billing > Customer portal.
+PORTAL_CONFIGURATION_ID = "bpc_1UetnzAYwPZpnTlfS7QZJDio"
+PORTAL_LOGIN_URL = "https://billing.stripe.com/p/login/5kQdR8fy9fE9cGD177gA800"
 # Spam check (Cloudflare Turnstile widget "Koivikko donation page (live)"). Required for /contact,
 # and before a donation can start: donation pages are a common target for testing stolen cards.
 # Must match spamCheckOnGift for give.koivikko.org in site/config.js.

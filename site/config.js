@@ -48,9 +48,13 @@ window.KOIVIKKO_CONFIG = {
     recipient: 'Koivikko Elämäntapa Instituutti sr',
     iban: 'FI11 5271 0420 4946 51',
   },
-  // Contact email, for reference only: the scripts no longer use it. The address shown is
-  // written in the pages themselves (search for "mailto:").
+  // Contact email. Used by the family-trust buttons while the enquiry form is off (below).
+  // The address shown elsewhere is written in the pages themselves (search for "mailto:").
   contactEmail: 'koivikkolife@gmail.com',
+  // Australian family-trust enquiry form. OFF on the live site until its email sending is set up
+  // (RESEND_API_KEY, CONTACT_TO_EMAIL and a sender address on the backend): the "Put me in touch"
+  // buttons then open an email to contactEmail instead. Stays on locally and on the sandbox.
+  familyTrustForm: location.hostname !== 'give.koivikko.org',
 
   // --- Analytics + Google Ads (only with the visitor's consent) ---------------------
   // Empty googleTagId = switched off: no banner, nothing loads. To switch on, fill in:
