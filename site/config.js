@@ -19,16 +19,21 @@ window.KOIVIKKO_CONFIG = {
       return sessionStorage.getItem('k_demo') === '1';
     } catch { return false; }
   })(),
-  // The backend (Cloudflare Worker). The same address must be listed under "connect-src"
-  // in the Content-Security-Policy line at the top of index.html and thank-you.html.
-  apiBase: ['localhost', '127.0.0.1'].includes(location.hostname)
-    ? 'http://localhost:8787'
-    : 'https://koivikko-donate-sandbox.koivikko-donate-backend.workers.dev', // SANDBOX backend; change to the live address at launch
-  // Cloudflare Turnstile site key for the enquiry form's spam check. Empty = no widget.
-  turnstileSiteKey: '0x4AAAAAAGIk6iUJR8Z0rDFv', // SANDBOX widget; make a live one at launch
+  // The backend (Cloudflare Worker), picked by where the page runs:
+  //   localhost / 127.0.0.1      -> local backend (npm run dev)
+  //   the sandbox copy (workers.dev, name contains "sandbox") -> sandbox backend, Stripe TEST mode
+  //   anywhere else (give.koivikko.org) -> LIVE backend, real payments
+  // Each address must be listed under "connect-src" in the Content-Security-Policy line at the
+  // top of index.html and thank-you.html.
+  apiBase: ['localhost', '127.0.0.1'].includes(location.hostname) ? 'http://localhost:8787'
+    : location.hostname.includes('sandbox') ? 'https://koivikko-donate-sandbox.koivikko-donate-backend.workers.dev'
+    : 'https://koivikko-donate.koivikko-donate-backend.workers.dev',
+  // Cloudflare Turnstile site key (spam check). Live widget "Koivikko donation page (live)" only
+  // works on give.koivikko.org; the sandbox widget covers the sandbox copy and localhost.
+  turnstileSiteKey: location.hostname === 'give.koivikko.org' ? '0x4AAAAAAGOhErPDj8QX797n' : '0x4AAAAAAGIk6iUJR8Z0rDFv',
   // true = also run the spam check before a gift can start (stops stolen-card testing).
-  // Must match TURNSTILE_ON_CHECKOUT in backend/wrangler.toml.
-  spamCheckOnGift: false,
+  // Must match TURNSTILE_ON_CHECKOUT in backend/wrangler.toml: "true" for production, "false" for the sandbox.
+  spamCheckOnGift: location.hostname === 'give.koivikko.org',
   // true = show the spam check in the "Choose your country" popup. Continue unlocks when it passes.
   // Its token is reused for the gift button (if fresh), so donors are not checked twice.
   // If Turnstile cannot load (ad blocker, offline), Continue unlocks anyway: the server is the real gate.

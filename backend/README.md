@@ -182,3 +182,17 @@ The Worker refuses to run if a live key is used in the sandbox or a test key in 
 - Secrets set on the Worker: `STRIPE_SECRET_KEY` (test key), `STRIPE_WEBHOOK_SECRET`. `TURNSTILE_SECRET_KEY`. Not set yet: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`.
 - The page's `apiBase` in `site/config.js` and the `connect-src` lines in `index.html` and `thank-you.html` point at the sandbox backend. Change all three at launch.
 - Spam check: Turnstile widget "Koivikko donation page (sandbox)" in the same Cloudflare account, allowed on the test page, `localhost` and `127.0.0.1`. Its site key is `turnstileSiteKey` in `site/config.js`. It guards the enquiry form only (`TURNSTILE_ON_CHECKOUT` is `false`). Make a separate widget for `give.koivikko.org` at launch.
+
+## Production deployment (23 Nov 2026)
+
+| What | Where |
+|---|---|
+| Live page | https://give.koivikko.org (snswserver, see `../deploy/snsw/README.md`) |
+| Backend (Worker `koivikko-donate`) | https://koivikko-donate.koivikko-donate-backend.workers.dev |
+| Saved counter (KV) | `production-CACHE` (`ccb7a5a40920408c9c1f3ed76cdf039b`) |
+| Spam check | Turnstile widget "Koivikko donation page (live)", domain `give.koivikko.org`; required at checkout |
+
+- Redeploy the backend: `npm run deploy:live`. The page deploys itself on every push to `main`.
+- Secrets set: `TURNSTILE_SECRET_KEY`. Still to set (live Stripe): `STRIPE_SECRET_KEY` (restricted `rk_live_` key),
+  `STRIPE_WEBHOOK_SECRET`; for the family-trust form: `RESEND_API_KEY`, `CONTACT_TO_EMAIL`.
+- `site/config.js` picks the backend by address: localhost -> local, "sandbox" in the name -> sandbox, else live.

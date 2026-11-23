@@ -76,13 +76,14 @@ CONTACT_FROM_EMAIL = "Koivikko Donations <donations@example.com>"
 # Stripe customer portal: create the LIVE portal settings first, then fill these in.
 PORTAL_CONFIGURATION_ID = ""
 PORTAL_LOGIN_URL = ""
-# Spam check (Cloudflare Turnstile). Always on for /contact once TURNSTILE_SECRET_KEY is set.
-# Set to "true" to require it before a donation can start as well.
-TURNSTILE_ON_CHECKOUT = "false"
+# Spam check (Cloudflare Turnstile widget "Koivikko donation page (live)"). Required for /contact,
+# and before a donation can start: donation pages are a common target for testing stolen cards.
+# Must match spamCheckOnGift for give.koivikko.org in site/config.js.
+TURNSTILE_ON_CHECKOUT = "true"
 
 [[env.production.kv_namespaces]]
 binding = "CACHE"
-id = "REPLACE_WITH_LIVE_KV_ID"
+id = "ccb7a5a40920408c9c1f3ed76cdf039b"   # production-CACHE (created 23 Nov 2026)
 
 # Rate limits per visitor IP address, per endpoint. "period" is in seconds (10 or 60 only).
 [[env.production.ratelimits]]
